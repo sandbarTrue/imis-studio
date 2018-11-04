@@ -1,0 +1,10 @@
+#menulist:
+ # - menu: { name: ll,link: http://dddd }
+  #- menu: { name: 33,link: hht://ddd }
+menulist:
+   - menu:
+      name: ll
+      link: http://sdsds
+   - menu :
+      name: kk
+      link: JJkk

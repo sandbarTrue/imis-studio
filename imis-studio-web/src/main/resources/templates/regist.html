@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>信息采集</title>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+<body>
+<div id="app">
+    <el-row type="flex" justify="center" align="middle" class="row-bg">
+        <el-col :span="8">
+            <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                    <span>信息采集</span>
+                </div>
+                <div class="text item">
+                    <el-steps :active="active" finish-status="success">
+                        <el-step title="基本信息">
+                        </el-step>
+                        <el-step title="简历信息">
+                        </el-step>
+                    </el-steps>
+                    <template v-if="active==0">
+                    <el-form ref="userBaseForm" :model="user" :rules="userBaseRules" label-position="top">
+                        <el-form-item label="用户名" prop="name">
+                            <el-input v-model="user.name" placeholder="用户名"></el-input>
+                        </el-form-item>
+                        <el-form-item label="学号" prop="studentId">
+                            <el-input v-model="user.studentId" placeholder="学号"></el-input>
+                        </el-form-item>
+                        <el-form-item label="入学年份" prop="grade">
+                            <el-date-picker
+                                    v-model="user.grade"
+                                    type="year"
+                                    placeholder="选择年份"
+                                    format="yyyy"
+                                    value-format="yyyy">
+                            </el-date-picker>
+                           <!-- <el-input-number v-model="user.grade" placeholder="入学年份"></el-input-number>-->
+                        </el-form-item>
+                        <el-form-item label="邮箱" prop="email">
+                            <el-input  v-model="user.email" placeholder="邮箱"></el-input>
+                        </el-form-item>
+                            <el-form-item label="头像">
+                                <el-upload
+                                        action="/api/imis/upload"
+                                        list-type="picture-card"
+                                        :limit="1"
+                                        :on-preview="handlePictureCardPreview"
+                                        :on-remove="handleRemove"
+                                        :on-error="handleError"
+                                        :on-success="handleSuccess"
+                                        :on-exceed="handleExceed"
+                                        :before-upload="beforeAvatarUpload"
+                                >
+                                    <i class="el-icon-plus"></i>
+                                </el-upload>
+                            </el-form-item>
+                            <el-row type="flex" justify="center" align="middle" class="row-bg">
+                            <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
+                            </el-row>
+                        </el-form>
+                        <el-dialog :visible.sync="dialogVisible">
+                            <img width="100%" :src="dialogImageUrl" alt="">
+                        </el-dialog>
+                        </template>
+                        <template v-if="active==1">
+                            <el-form ref="userResumeForm" :model="user" :rules="userResumeRules" label-position="top">
+                                <el-form-item label="个人主页" prop="mainStation">
+                                    <el-input  v-model="user.mainStation" placeholder="个人主页 http:// https://"></el-input>
+                                </el-form-item>
+
+                                <el-form-item label="GitHUb" prop="gitHubAddress">
+                                    <el-input  v-model="user.gitHubAddress" placeholder=" http:// https://"></el-input>
+                                </el-form-item>
+
+                                <el-form-item label="个人简介" prop="info">
+                                    <el-input  type="textarea" autosize v-model="user.info" placeholder="个人简介 不能超过250个字"></el-input>
+                                </el-form-item>
+                                <el-form-item label="简历">
+                                    <el-upload
+                                            action="/api/imis/upload"
+                                            :limit="1"
+                                            :on-remove="handleResumeRemove"
+                                            :on-error="handleError"
+                                            :on-success="handleResumeSuccess"
+                                            :on-exceed="handleExceed"
+                                            :before-upload="beforeResumeUpload"
+                                    >
+                                        <el-button size="small" type="primary">点击上传</el-button>
+                                    </el-upload>
+                                </el-form-item>
+                                <el-row type="flex" justify="center" align="middle" class="row-bg">
+                                <el-button style="margin-top: 12px;" @click="regist">提交</el-button>
+                                </el-row>
+                            </el-form>
+                        </template>
+                </div>
+            </el-card>
+        </el-col>
+    </el-row>
+
+
+</div>
+</body>
+
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                //步数
+                active: 0,
+                user:{
+                    name:'',
+                    studentId:'',
+                    email:'',
+                    grade:'',
+                    mainStation:'',
+                    gitHubAddress:'',
+                    img:'',
+                    info:'',
+                    resume:'',
+                },
+                userBaseRules: {
+                    name: [
+                        { required: true, message: '请输入用户名', trigger: 'blur' },
+                        { min: 1, max: 8, message: '长度在 1 到 8 个字符', trigger: 'blur' }
+                    ],
+                    studentId: [
+                        { required: true, message: '请输入学号', trigger: 'blur' },
+                        { pattern: /^[0-9]*$/, message: '学号格式不对'}
+                    ],
+                    email: [
+                        { required: true, message: '请输入邮箱', trigger: 'blur' },
+                        { pattern: /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/, message: '邮箱格式不对'}
+                    ],
+                    grade: [
+                        { required: true, message: '请输入入学年份', trigger: 'blur'}
+                    ]
+
+                },
+                userResumeRules:{
+                    mainStation: [
+                        { pattern: /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/,
+                            message: 'url格式不对'}
+                    ],
+                    gitHubAddress: [
+                        { pattern: /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/,
+                            message: 'url格式不对'}
+                    ],
+                    info: [
+                        { min: 1, max: 250, message: '长度在 1 到 250 个字符', trigger: 'blur' }
+                    ]
+                },
+                dialogImageUrl: '',
+                dialogVisible: false
+            };
+        },
+        methods: {
+            next() {
+                this.$refs["userBaseForm"].validate(function (valid) {
+                    if (valid) {
+                        if(this.user.img==''){
+                            this.$message.error("请上传头像")
+                            return false;
+                        }
+                        if (this.active++ > 1) {
+                            return ;
+                        }
+                    } else {
+                        return false;
+                }
+            }.bind(this));
+            },
+            regist(){
+                this.$refs["userResumeForm"].validate(function (valid) {
+                    if (valid) {
+                        this.active++;
+                        axios.post("/api/imis/regist",this.user)
+                                .then(function (response) {
+                                    // handle success
+                                    this.$message.success('提交成功');
+                                    window.location.href="/imis/index"
+                                }.bind(this))
+                                .catch(function (error) {
+                                    // handle error
+                                    this.$message.error('提交失败');
+                                }.bind(this))
+
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }.bind(this));
+            },
+            handleError(){
+                this.$message.error('上传失败');
+            },
+            handleSuccess(fileUrl){
+                this.user.img=fileUrl;
+                this.$message.success('上传成功');
+            },
+
+            handleResumeSuccess(fileUrl){
+                this.user.resume=fileUrl;
+                this.$message.success('上传成功');
+            },
+            handlePictureCardPreview(file) {
+                this.dialogImageUrl = file.url;
+                this.dialogVisible = true;
+            },
+            handleRemove(){
+                this.user.img ="";
+            },
+            handleResumeRemove(){
+                this.user.resume=''
+            },
+            handleExceed(){
+                this.$message.error('已经传过了，请删除后重试');
+            },
+            beforeAvatarUpload(file) {
+                const isImg = (file.type === 'image/jpeg') || file.type === 'image/png';
+                const isLt5M = file.size / 1024 / 1024 < 5;
+
+                if (!isImg) {
+                    this.$message.error('上传头像图片只能是 JPG或PNG 格式!');
+                }
+                if (!isLt5M) {
+                    this.$message.error('上传头像图片大小不能超过 5MB!');
+                }
+                return isImg && isLt5M;
+            },
+            beforeResumeUpload(file){
+                const isAllowed = (file.type === 'image/jpeg') || (file.type === 'image/png') || (file.type === 'application/pdf') ;
+                const isLt10M = file.size / 1024 / 1024 < 10;
+                if (!isAllowed) {
+                    this.$message.error('上传头像图片只能是 JPG、PNG、PDF 格式!');
+                }
+                if (!isLt10M) {
+                    this.$message.error('上传头像图片大小不能超过 10MB!');
+                }
+                return isAllowed && isLt10M;
+            }
+        }
+    })
+</script>
+
+</html>
