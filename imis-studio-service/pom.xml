@@ -49,6 +49,11 @@
 			<artifactId>imis-studio-dao</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.cqupt.imis</groupId>
+			<artifactId>imis-studio-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
         <!--七牛云上传-->
 		<dependency>
 			<groupId>com.qiniu</groupId>

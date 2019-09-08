@@ -16,7 +16,9 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by zhoujun on 2018/7/22.
+ *
+ * @author zhoujun
+ * @date 2018/7/22
  */
 @RestController
 @RequestMapping("/api/imis")
@@ -27,33 +29,21 @@ public class UserApiController {
     private UserService userService;
     @RequestMapping("/regist")
     public ResponseEntity<?> regist(@RequestBody User user){
-        try{
-            userService.saveUser(user);
-        }
-        catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        userService.saveUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @RequestMapping("/upload")
     public ResponseEntity<String> upload(@RequestParam("file")MultipartFile multipartFile) throws IOException {
-        String path=null;
-        try{
-            path=uploadFileService.uploadStream(multipartFile.getInputStream(),multipartFile.getOriginalFilename());
-        }catch (Exception e){
-            return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return new ResponseEntity<String>(path, HttpStatus.OK);
+        String path=uploadFileService.uploadStream(multipartFile.getInputStream(),multipartFile.getOriginalFilename());
+        return  new ResponseEntity<>(path,HttpStatus.OK);
     }
     @RequestMapping("/loadAllUsers")
     public ResponseEntity<?> loadAllUsers(){
-        List<User> users=null;
-        try{
-             users=userService.getAllUsers();
-        }
-        catch (Exception e){
-            return new ResponseEntity<>("查询失败",HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        List<User> users=userService.getAllUsers();
         return new ResponseEntity<>(users,HttpStatus.OK);
+    }
+    @RequestMapping("/test")
+    public String test(){
+        return "hello word ";
     }
 }

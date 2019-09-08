@@ -21,13 +21,13 @@ import java.io.InputStream;
 @Service
 @Slf4j
 public class UploadFileServiceImpl  implements UploadFileService{
-    private final  String URL="http://otdtwjwx2.bkt.clouddn.com/";
+    private final  String URL="http://img.qiniu.imis.group/";
 
     private final Logger logger= LoggerFactory.getLogger(getClass());
     @Resource
     private MyUploadManager myUploadManager;
     @Override
-    //// TODO: 2018/8/5 改写成模板方法 
+    // TODO: 2018/8/5 改写成模板方法
     public String uploadFile(File file) {
         ArgumentUtil.agrgumentValid(file);
         Response  response= null;

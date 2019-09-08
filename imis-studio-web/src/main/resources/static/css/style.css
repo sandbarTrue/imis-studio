@@ -46,20 +46,20 @@ hr {
 	color: #00C6D7;
   	font-size: 56px;
 }
-
 .section-title h1 {
 	font-size: 24px;
 }
 
 .section-title {
   padding-bottom: 32px;
+  text-align: center;
 }
 
 .medium-icon {
   font-size: 32px !important;
 }
 
-#work,#about, #team, 
+#work,#about, #team, #project,
 #portfolio, #pricing, #contact {
    padding-top: 100px;
   padding-bottom: 100px;
@@ -380,7 +380,7 @@ about section
 /* ==========================================================================
 team section
 ========================================================================== */
-#team {
+#team{
   text-align: center;
 }
 #team h3 {
@@ -438,6 +438,70 @@ team section
 
 #team .social-icon li a:hover {
   color: #00c6d7;
+}
+
+
+/* ==========================================================================
+team section
+========================================================================== */
+#project{
+    text-align: center;
+}
+#project h3 {
+    color: #00c6d7;
+    font-size: 14px;
+    font-weight: bold;
+}
+#project .col-md-3 {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+#project .team-wrapper {
+    overflow: hidden;
+    position: relative;
+}
+#project .team-des {
+    background-color: rgba(00,00,00,0.6);
+    position: absolute;
+    color: #ffffff;
+    opacity: 0;
+    max-width: 500px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: all 0.4s ease-in-out;
+    margin: 0 auto;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+#project .team-des:hover {
+    opacity: 1;
+}
+#project img {
+    margin: 0 auto;
+}
+
+#project .social-icon li a {
+    color: #fff;
+}
+
+#project .social-icon li a:hover {
+    color: #00c6d7;
 }
 
 /* ==========================================================================

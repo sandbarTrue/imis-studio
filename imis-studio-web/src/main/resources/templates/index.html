@@ -7,7 +7,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="keywords" content="">
 	<meta name="description" content="">
-
 	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/static/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/static/css/animate.min.css">
@@ -61,7 +60,7 @@
 				<li><a href="#home" class="smoothScroll">首页</a></li>
 				<li><a href="#about" class="smoothScroll">工作室</a></li>
 				<li><a href="#team" class="smoothScroll">团队</a></li>
-				<li><a href="#portfolio" class="smoothScroll">项目</a></li>
+				<li><a href="#project" class="smoothScroll">项目</a></li>
 				<li><a href="#contact" class="smoothScroll">联系我们</a></li>
 			</ul>
 		</div>
@@ -133,7 +132,6 @@
 					<h1 class="heading bold">团队</h1>
 					<hr>
 				</div>
-				<el-col :span="4" :offset="20"><a href="">查看更多 》》</a></el-col>
 			</div>
 			<div class="col-md-3 col-sm-6 wow fadeIn" data-wow-delay="0.9s" v-for="user in userList">
 				<div class="team-wrapper">
@@ -153,25 +151,59 @@
 									<li><a :href="user.resume" class="fa fa-file-pdf-o wow fadeIn" data-wow-delay="0.3s"></a></li>
 								</template>
 							</ul>
-							<a :href="user.email"  data-wow-delay="0.6s">详细介绍>></a>
+							<!--<a :href="user.email"  data-wow-delay="0.6s">详细介绍>></a>-->
 						</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
-
+	<!-- team section -->
+	<section
+			id="project">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 col-sm-12">
+					<div class="section-title">
+						<strong>03</strong>
+						<h1 class="heading bold">项目</h1>
+						<hr>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 wow fadeIn" data-wow-delay="0.9s" v-for="project in projectList">
+					<div class="team-wrapper">
+						<img  :src="project.img"  alt="team img" height="262.5" width="262.5">
+						<div class="team-des" >
+							<h4>{{project.name}}</h4>
+							<el-row>
+								<el-col>
+									<h3>作者：{{project.contributor}}</h3>
+								</el-col>
+							</el-row>
+							<h3>简介：{{project.info}}</h3>
+							<hr>
+							<el-row>
+								<el-col>
+									项目地址：<a :href="project.link" class="fa fa-github wow fadeIn" data-wow-delay="0.3s"></a>
+								</el-col>
+							</el-row>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 <!-- portfolio section -->
-<div id="portfolio">
+<!--<section id="project">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12 col-sm-12">
+			<div class="col-md-12 col-sm-12 text-cente">
 				<div class="section-title">
 					<strong>03</strong>
-					<h1 class="heading bold">OUR PORTFOLIO</h1>
+					<h1 class="heading bold">OUR PROJECT</h1>
 					<hr>
 				</div>
-				<!-- ISO section -->
+				&lt;!&ndash; ISO section &ndash;&gt;
 				<div class="iso-section">
 					<ul class="filter-wrapper clearfix">
                    		 <li><a href="#" data-filter="*" class="selected opc-main-bg">All</a></li>
@@ -214,7 +246,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+</section>-->
 <!-- contact section -->
 <section id="contact">
 	<div class="container">
@@ -222,37 +254,44 @@
 			<div class="col-md-12 col-sm-12 text-center">
 				<div class="section-title">
 					<strong>04</strong>
-					<h1 class="heading bold">CONTACT US</h1>
+					<h1 class="heading bold">联系我们</h1>
 					<hr>
 				</div>
 			</div>
 			<div class="col-md-6 col-sm-12 contact-info">
 				<h2 class="heading bold">CONTACT INFO</h2>
-				<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteu sunt in culpa qui officia deserunt mollit anim id.</p>
+				<p>Talk is cheap,Show me the code</p>
 				<div class="col-md-6 col-sm-4">
 					<h3><i class="icon-envelope medium-icon wow bounceIn" data-wow-delay="0.6s"></i> EMAIL</h3>
-					<p>hello@company.com</p>
-				</div>
-				<div class="col-md-6 col-sm-4">
-					<h3><i class="icon-phone medium-icon wow bounceIn" data-wow-delay="0.6s"></i> PHONES</h3>
-					<p>010-020-0340 | 090-080-0760</p>
+					<p>imis-studio@imis.group</p>
 				</div>
 			</div>
 			<div class="col-md-6 col-sm-12">
-				<form action="#" method="get" class="wow fadeInUp" data-wow-delay="0.6s">
-					<div class="col-md-6 col-sm-6">
-						<input type="text" class="form-control" placeholder="Name" name="name">
-					</div>
-					<div class="col-md-6 col-sm-6">
-						<input type="email" class="form-control" placeholder="Email" name="email">
-					</div>
-					<div class="col-md-12 col-sm-12">
-						<textarea class="form-control" placeholder="Message" rows="7" name="message"></textarea>
-					</div>
+				<el-form ref="contactInfo" :model="contactInfo" :rules="contactInfoRules" class="wow fadeInUp" data-wow-delay="0.6s">
+
+						<el-row :gutter="20">
+							<el-col :span="11">
+
+								<el-form-item prop="name">
+									<el-input v-model="contactInfo.name"   placeholder="Name"></el-input>
+								</el-form-item>
+
+							</el-col>
+							<el-col :span="11" >
+								<el-form-item prop="eamilAddress"	>
+									<el-input  v-model="contactInfo.eamilAddress"   placeholder="Email" ></el-input>
+								</el-form-item>
+
+
+							</el-col>
+						</el-row>
+					<el-form-item prop="message">
+						<el-input type="textarea" v-model="contactInfo.message" :rows="6"  placeholder="Message" ></el-input>
+					</el-form-item>
 					<div class="col-md-offset-4 col-md-8 col-sm-offset-4 col-sm-8">
-						<input type="submit" class="form-control" value="SEND MESSAGE">
+						<el-button  class="form-control" @click="sendMessage">SEND MESSAGE</el-button>
 					</div>
-				</form>
+				</el-form>
 			</div>
 		</div>
 	</div>
@@ -263,7 +302,6 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 col-sm-12">
-				<p>Copyright © Digital Team HTML5 Template | Design: <a href="#" target="_parent">Tooplate</a>. More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
 				<hr>
 				<ul class="social-icon">
 					<li><a href="#" class="fa fa-facebook wow fadeIn" data-wow-delay="0.3s"></a></li>
@@ -309,18 +347,70 @@
 					resume:'',
 					gitHubAddress:''
 				}],
+                projectList:[{
+                    name:'',
+                    link:'',
+                    info:'',
+                    contributor:'',
+                    img:'',
+                }],
+                contactInfo:{
+				    name:'',
+					message:'',
+                    eamilAddress:''
+				},
+                contactInfoRules: {
+                    name: [
+                        { required: true, message: '请输入名称', trigger: 'blur' }
+                    ],
+                    eamilAddress: [
+                        { required: true, message: '请输入邮箱', trigger: 'blur' },
+                        { pattern: /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/, message: '邮箱格式不对'}
+                    ],
+                    message: [
+                        { required: true, message: '请输入信息', trigger: 'blur' }
+                    ],
+                },
 			};
 		},
 		methods: {
 			loadData(){
-				axios.get("/api/imis/loadAllUsers")
-						.then(function (response) {
-							this.userList=response.data;
-						}.bind(this))
-						.catch(function (error) {
-							this.$message.error("获取成员信息失败")
-						}.bind(this))
+			    this.initMembers();
+			    this.initProjects();
 			},
+			initMembers:function () {
+                axios.get("/api/imis/loadAllUsers")
+                    .then(function (response) {
+                        this.userList=response.data;
+                    }.bind(this))
+                    .catch(function (error) {
+                        this.$message.error("获取成员信息失败")
+                    }.bind(this))
+            },
+			initProjects:function () {
+                axios.get("/api/imis/loadAllProjects")
+                    .then(function (response) {
+                        this.projectList=response.data;
+                    }.bind(this))
+                    .catch(function (error) {
+                        this.$message.error("获取项目信息失败")
+                    }.bind(this))
+            },
+			sendMessage:function () {
+                this.$refs["contactInfo"].validate(function (valid) {
+                    if(valid){
+                        axios.post("/api/imis/sendMessage",this.contactInfo)
+                            .then(function (response) {
+                                this.$message.success("发送信息成功！")
+                            }.bind(this))
+                            .catch(function (error) {
+                                this.$message.error("发送信息失败！")
+                            }.bind(this))
+					}
+                }.bind(this));
+
+				
+            }
 		}
 	})
 	vue.loadData();

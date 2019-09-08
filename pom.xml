@@ -25,10 +25,6 @@
 	</properties>
 
 	<dependencies>
-		<!--<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -54,11 +50,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!--<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>-->
 	</dependencies>
 
 	<build>
@@ -85,5 +76,6 @@
 		<module>imis-studio-dao</module>
 		<module>imis-studio-web</module>
 		<module>imis-studio-service</module>
+		<module>imis-studio-common</module>
 	</modules>
 </project>

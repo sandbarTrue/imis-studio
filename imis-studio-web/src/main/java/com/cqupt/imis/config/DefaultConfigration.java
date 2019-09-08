@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by zhoujun on 2018/7/22.
+ *
+ * @author zhoujun
+ * @date 2018/7/22
  */
 @Configuration
 public class DefaultConfigration {

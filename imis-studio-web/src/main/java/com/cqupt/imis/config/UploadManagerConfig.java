@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 
 /**
- * Created by zhoujun on 2018/7/29.
+ *
+ * @author zhoujun
+ * @date 2018/7/29
  */
 @org.springframework.context.annotation.Configuration
 public class UploadManagerConfig {

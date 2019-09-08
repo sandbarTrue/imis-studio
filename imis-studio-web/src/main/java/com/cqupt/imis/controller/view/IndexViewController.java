@@ -4,7 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * Created by zhoujun on 2018/7/22.
+ *
+ * @author zhoujun
+ * @date 2018/7/22
  */
 @Controller
 @RequestMapping("/imis")
